@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atin Yadav | Physiotherapist</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500;600&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c0f;
+    --bg2: #0f1215;
+    --bg3: #141820;
+    --card: #131619;
+    --border: rgba(180,145,90,0.18);
+    --gold: #c9a84c;
+    --gold2: #e8c97a;
+    --gold-glow: rgba(201,168,76,0.15);
+    --text: #f0ebe0;
+    --text2: #b0a898;
+    --text3: #6e6a62;
+    --accent: #4a9eff;
+    --green: #5cc87a;
+    --red: #e05c5c;
+    --shadow: 0 8px 40px rgba(0,0,0,0.6);
+    --radius: 18px;
+    --transition: 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  }
+  [data-theme="light"] {
+    --bg: #f5f0e8;
+    --bg2: #ede8dc;
+    --bg3: #e5dfd0;
+    --card: #fff9ef;
+    --border: rgba(140,100,40,0.18);
+    --gold: #a0721e;
+    --gold2: #c49030;
+    --gold-glow: rgba(160,114,30,0.10);
+    --text: #1a1610;
+    --text2: #5a5040;
+    --text3: #9a9080;
+    --shadow: 0 8px 40px rgba(100,80,30,0.12);
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+    transition: background var(--transition), color var(--transition);
+  }
+
+  /* ─── CURSOR ─── */
+  .cursor {
+    width: 12px; height: 12px;
+    background: var(--gold);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none; z-index: 9999;
+    transform: translate(-50%,-50%);
+    transition: transform 0.1s, background 0.3s;
+    mix-blend-mode: difference;
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1.5px solid var(--gold);
+    border-radius: 50%;
+    position: fixed; top: 0; left: 0;
+    pointer-events: none; z-index: 9998;
+    transform: translate(-50%,-50%);
+    transition: transform 0.25s cubic-bezier(0.23,1,0.32,1), border-color 0.3s;
+    opacity: 0.6;
+  }
+
+  /* ─── NOISE OVERLAY ─── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 1;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    opacity: 0.04;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 22px 60px;
+    background: rgba(10,12,15,0.7);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    transition: background var(--transition), border-color var(--transition);
+  }
+  [data-theme="light"] nav { background: rgba(245,240,232,0.82); }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem; font-weight: 700;
+    color: var(--gold);
+    letter-spacing: 2px;
+    text-decoration: none;
+  }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a {
+    color: var(--text2); text-decoration: none;
+    font-size: 0.85rem; font-weight: 500; letter-spacing: 1.5px;
+    text-transform: uppercase;
+    position: relative;
+    transition: color 0.3s;
+  }
+  .nav-links a::after {
+    content: ''; position: absolute; bottom: -3px; left: 0; right: 0; height: 1px;
+    background: var(--gold); transform: scaleX(0); transform-origin: right;
+    transition: transform 0.35s cubic-bezier(0.23,1,0.32,1);
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-links a:hover::after { transform: scaleX(1); transform-origin: left; }
+
+  .theme-toggle {
+    width: 52px; height: 28px;
+    background: var(--bg3); border: 1.5px solid var(--border);
+    border-radius: 50px; cursor: pointer;
+    display: flex; align-items: center;
+    padding: 3px; transition: background 0.4s;
+    position: relative;
+  }
+  .toggle-ball {
+    width: 20px; height: 20px;
+    background: var(--gold);
+    border-radius: 50%;
+    transition: transform var(--transition);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px;
+  }
+  [data-theme="light"] .toggle-ball { transform: translateX(24px); }
+
+  /* ─── HERO ─── */
+  #hero {
+    min-height: 100vh;
+    display: grid; grid-template-columns: 1fr 1fr;
+    align-items: center; gap: 0;
+    padding: 120px 60px 80px;
+    position: relative; overflow: hidden;
+  }
+  .hero-bg-lines {
+    position: absolute; inset: 0; pointer-events: none;
+    background:
+      linear-gradient(to right, var(--border) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--border) 1px, transparent 1px);
+    background-size: 80px 80px;
+    opacity: 0.3;
+  }
+  .hero-glow {
+    position: absolute; top: 20%; right: 10%;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, var(--gold-glow) 0%, transparent 70%);
+    pointer-events: none; animation: glowPulse 6s ease-in-out infinite;
+  }
+  @keyframes glowPulse {
+    0%,100% { opacity: 0.5; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.15); }
+  }
+
+  .hero-left { position: relative; z-index: 2; }
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--gold-glow); border: 1px solid var(--border);
+    color: var(--gold); font-size: 0.75rem; font-weight: 600;
+    letter-spacing: 2px; text-transform: uppercase;
+    padding: 6px 16px; border-radius: 50px;
+    margin-bottom: 28px;
+    animation: fadeUp 0.8s 0.2s both;
+  }
+  .hero-tag::before { content: '●'; font-size: 6px; animation: blink 2s infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+  h1.hero-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    line-height: 1.05; font-weight: 900;
+    color: var(--text);
+    margin-bottom: 8px;
+    animation: fadeUp 0.8s 0.35s both;
+  }
+  h1.hero-name span { color: var(--gold); display: block; font-style: italic; }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem; font-style: italic;
+    color: var(--text2); margin-bottom: 28px;
+    animation: fadeUp 0.8s 0.5s both;
+    letter-spacing: 1px;
+  }
+
+  .hero-desc {
+    font-size: 1rem; color: var(--text2); line-height: 1.8;
+    max-width: 480px; margin-bottom: 40px;
+    animation: fadeUp 0.8s 0.65s both;
+  }
+
+  .hero-btns {
+    display: flex; gap: 16px; flex-wrap: wrap;
+    animation: fadeUp 0.8s 0.8s both;
+  }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--gold); color: #0a0c0f;
+    padding: 14px 32px; border-radius: 50px;
+    font-weight: 700; font-size: 0.9rem; text-decoration: none;
+    letter-spacing: 0.5px; transition: all 0.3s;
+    box-shadow: 0 4px 24px rgba(201,168,76,0.3);
+  }
+  .btn-primary:hover { background: var(--gold2); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(201,168,76,0.45); }
+  .btn-outline {
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 1.5px solid var(--border); color: var(--text);
+    padding: 14px 32px; border-radius: 50px;
+    font-weight: 500; font-size: 0.9rem; text-decoration: none;
+    transition: all 0.3s;
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+
+  /* ─── PROFILE IMAGE ─── */
+  .hero-right {
+    display: flex; justify-content: center; align-items: center;
+    position: relative; z-index: 2;
+    animation: fadeUp 0.9s 0.4s both;
+  }
+  .profile-frame {
+    position: relative; width: 340px; height: 420px;
+  }
+  .profile-frame::before {
+    content: '';
+    position: absolute; top: -12px; left: -12px; right: 12px; bottom: 12px;
+    border: 2px solid var(--gold); border-radius: 20px;
+    opacity: 0.5; transition: opacity 0.3s;
+    animation: framePulse 4s ease-in-out infinite;
+  }
+  .profile-frame::after {
+    content: '';
+    position: absolute; top: 12px; left: 12px; right: -12px; bottom: -12px;
+    border: 1px solid var(--gold); border-radius: 20px;
+    opacity: 0.25;
+  }
+  @keyframes framePulse { 0%,100%{opacity:0.5} 50%{opacity:0.9} }
+  .profile-img {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center 20%;
+    border-radius: 18px;
+    display: block;
+    background: linear-gradient(135deg, var(--bg3) 0%, var(--bg2) 100%);
+    position: relative; z-index: 1;
+    box-shadow: var(--shadow);
+  }
+  .profile-placeholder {
+    width: 100%; height: 100%; border-radius: 18px;
+    background: linear-gradient(160deg, var(--bg3) 0%, #1c2030 100%);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 12px; position: relative; z-index: 1;
+    box-shadow: var(--shadow);
+  }
+  .profile-placeholder svg { opacity: 0.3; }
+  .profile-placeholder span { color: var(--text3); font-size: 0.8rem; letter-spacing: 1px; }
+
+  .hero-stats {
+    position: absolute; bottom: -20px; left: 50%;
+    transform: translateX(-50%);
+    display: flex; gap: 0;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 16px; overflow: hidden;
+    box-shadow: var(--shadow); z-index: 3; white-space: nowrap;
+  }
+  .stat { padding: 16px 28px; text-align: center; border-right: 1px solid var(--border); }
+  .stat:last-child { border-right: none; }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700; color: var(--gold); display: block; }
+  .stat-label { font-size: 0.7rem; color: var(--text3); letter-spacing: 1px; text-transform: uppercase; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── SECTION COMMON ─── */
+  section { padding: 100px 60px; position: relative; }
+  .section-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    color: var(--gold); font-size: 0.72rem; font-weight: 700;
+    letter-spacing: 3px; text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  .section-tag::before { content: ''; width: 30px; height: 1px; background: var(--gold); display: block; }
+  h2.section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 900; margin-bottom: 16px;
+    line-height: 1.1;
+  }
+  h2.section-title em { color: var(--gold); font-style: italic; }
+  .section-sub { color: var(--text2); font-size: 1rem; max-width: 560px; line-height: 1.7; margin-bottom: 60px; }
+
+  /* ─── DIVIDER ─── */
+  .divider {
+    height: 1px; background: linear-gradient(to right, transparent, var(--gold), transparent);
+    margin: 0 60px; opacity: 0.3;
+  }
+
+  /* ─── ABOUT ─── */
+  #about { background: var(--bg2); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  .about-badges { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 28px; }
+  .badge {
+    padding: 6px 16px; border-radius: 50px; font-size: 0.75rem;
+    font-weight: 600; letter-spacing: 0.5px; border: 1.5px solid;
+  }
+  .badge-gold { border-color: var(--gold); color: var(--gold); background: var(--gold-glow); }
+  .badge-blue { border-color: var(--accent); color: var(--accent); background: rgba(74,158,255,0.08); }
+  .badge-green { border-color: var(--green); color: var(--green); background: rgba(92,200,122,0.08); }
+  .about-text p { color: var(--text2); line-height: 1.85; margin-bottom: 16px; font-size: 0.95rem; }
+  .about-info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 28px; }
+  .info-item label { font-size: 0.72rem; color: var(--text3); letter-spacing: 1.5px; text-transform: uppercase; display: block; margin-bottom: 4px; }
+  .info-item span { font-size: 0.9rem; color: var(--text); font-weight: 500; }
+
+  /* Education timeline on right */
+  .edu-timeline { position: relative; padding-left: 28px; }
+  .edu-timeline::before {
+    content: ''; position: absolute; left: 0; top: 6px; bottom: 6px;
+    width: 2px; background: linear-gradient(to bottom, var(--gold), transparent);
+  }
+  .edu-item { position: relative; margin-bottom: 36px; }
+  .edu-item::before {
+    content: ''; position: absolute; left: -33px; top: 6px;
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--gold); box-shadow: 0 0 12px var(--gold);
+  }
+  .edu-year { font-size: 0.72rem; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 4px; }
+  .edu-title { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 600; margin-bottom: 4px; }
+  .edu-school { color: var(--text2); font-size: 0.85rem; margin-bottom: 6px; }
+  .edu-desc { color: var(--text3); font-size: 0.82rem; line-height: 1.6; }
+
+  /* ─── SERVICES ─── */
+  #services {}
+  .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .service-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 36px 28px;
+    position: relative; overflow: hidden;
+    transition: transform 0.4s cubic-bezier(0.23,1,0.32,1), box-shadow 0.4s, border-color 0.4s;
+    cursor: default;
+  }
+  .service-card::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(circle at 70% 10%, var(--gold-glow), transparent 60%);
+    opacity: 0; transition: opacity 0.4s;
+  }
+  .service-card:hover { transform: translateY(-8px); box-shadow: 0 20px 60px rgba(0,0,0,0.4); border-color: rgba(201,168,76,0.35); }
+  .service-card:hover::before { opacity: 1; }
+  .service-icon {
+    width: 56px; height: 56px; border-radius: 14px;
+    background: var(--gold-glow); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.6rem; margin-bottom: 20px;
+    transition: transform 0.3s;
+  }
+  .service-card:hover .service-icon { transform: scale(1.1) rotate(-5deg); }
+  .service-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 700; margin-bottom: 10px; }
+  .service-card p { color: var(--text2); font-size: 0.85rem; line-height: 1.7; }
+  .service-num {
+    position: absolute; top: 20px; right: 24px;
+    font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 900;
+    color: var(--gold); opacity: 0.06; line-height: 1;
+  }
+
+  /* ─── CERTIFICATIONS ─── */
+  #certifications { background: var(--bg2); }
+  .certs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 24px; }
+  .cert-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); overflow: hidden;
+    transition: transform 0.4s cubic-bezier(0.23,1,0.32,1), box-shadow 0.4s;
+    position: relative;
+  }
+  .cert-card:hover { transform: translateY(-6px); box-shadow: 0 16px 50px rgba(0,0,0,0.35); }
+  .cert-img-wrap {
+    width: 100%; height: 160px; overflow: hidden;
+    background: linear-gradient(135deg, var(--bg3) 0%, #1c2030 100%);
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .cert-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+  .cert-card:hover .cert-img-wrap img { transform: scale(1.05); }
+  .cert-img-placeholder {
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 8px; font-size: 2rem;
+  }
+  .cert-img-placeholder span { font-size: 0.7rem; color: var(--text3); letter-spacing: 1px; }
+  .cert-badge {
+    position: absolute; top: 10px; right: 10px;
+    background: var(--gold); color: #0a0c0f;
+    font-size: 0.65rem; font-weight: 700; letter-spacing: 1px;
+    padding: 3px 10px; border-radius: 50px;
+  }
+  .cert-body { padding: 20px; }
+  .cert-body h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-weight: 700; margin-bottom: 4px; }
+  .cert-body p { color: var(--text2); font-size: 0.78rem; margin-bottom: 12px; }
+  .cert-body .cert-link {
+    color: var(--gold); font-size: 0.78rem; font-weight: 600;
+    text-decoration: none; letter-spacing: 1px; text-transform: uppercase;
+    display: inline-flex; align-items: center; gap: 6px;
+    transition: gap 0.3s;
+  }
+  .cert-body .cert-link:hover { gap: 10px; }
+
+  /* ─── EXPERIENCE ─── */
+  #experience {}
+  .exp-list { max-width: 800px; }
+  .exp-item {
+    display: grid; grid-template-columns: 160px 1fr;
+    gap: 32px; padding: 36px 0;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    transition: background 0.3s;
+  }
+  .exp-item:last-child { border-bottom: none; }
+  .exp-date { color: var(--text3); font-size: 0.82rem; letter-spacing: 1px; padding-top: 4px; }
+  .exp-content h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 700; margin-bottom: 4px; }
+  .exp-company { color: var(--gold); font-size: 0.85rem; font-weight: 600; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+  .exp-company::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  .exp-content p { color: var(--text2); font-size: 0.88rem; line-height: 1.75; }
+  .exp-tags { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+  .exp-tag { background: var(--bg3); border: 1px solid var(--border); color: var(--text2); font-size: 0.72rem; padding: 4px 12px; border-radius: 50px; letter-spacing: 0.5px; }
+
+  /* ─── CONTACT ─── */
+  #contact { background: var(--bg2); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+  .contact-info h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; margin-bottom: 24px; }
+  .contact-item {
+    display: flex; gap: 18px; margin-bottom: 28px; align-items: flex-start;
+  }
+  .contact-icon {
+    width: 48px; height: 48px; border-radius: 12px;
+    background: var(--gold-glow); border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.2rem; flex-shrink: 0;
+  }
+  .contact-detail label { font-size: 0.72rem; color: var(--text3); letter-spacing: 1.5px; text-transform: uppercase; display: block; margin-bottom: 4px; }
+  .contact-detail a, .contact-detail span {
+    color: var(--text); font-size: 0.95rem; font-weight: 500;
+    text-decoration: none; transition: color 0.3s;
+  }
+  .contact-detail a:hover { color: var(--gold); }
+
+  .contact-map-box {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 32px;
+    position: relative; overflow: hidden;
+  }
+  .contact-map-box h4 { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; margin-bottom: 20px; }
+  .map-placeholder {
+    width: 100%; height: 220px; border-radius: 12px;
+    background: var(--bg3); border: 1px solid var(--border);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 10px; color: var(--text3); font-size: 0.85rem;
+    position: relative; overflow: hidden;
+  }
+  .map-pin-anim { font-size: 2.5rem; animation: pinBounce 2s ease-in-out infinite; }
+  @keyframes pinBounce {
+    0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)}
+  }
+  .map-grid {
+    position: absolute; inset: 0;
+    background-image: linear-gradient(var(--border) 1px, transparent 1px),
+                      linear-gradient(to right, var(--border) 1px, transparent 1px);
+    background-size: 30px 30px;
+  }
+  .address-text {
+    margin-top: 18px; color: var(--text2); font-size: 0.88rem; line-height: 1.7;
+    padding-top: 18px; border-top: 1px solid var(--border);
+  }
+  .address-text strong { color: var(--text); font-weight: 600; }
+
+  /* ─── SCROLL REVEAL ─── */
+  .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s cubic-bezier(0.23,1,0.32,1), transform 0.8s cubic-bezier(0.23,1,0.32,1); }
+  .reveal.visible { opacity: 1; transform: none; }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    padding: 40px 60px;
+    border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; color: var(--gold); font-weight: 700; letter-spacing: 2px; }
+  .footer-copy { font-size: 0.78rem; color: var(--text3); }
+
+  /* ─── SCROLLBAR ─── */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 4px; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    nav { padding: 18px 24px; }
+    .nav-links { display: none; }
+    #hero { grid-template-columns: 1fr; padding: 100px 24px 60px; text-align: center; }
+    .hero-right { margin-top: 50px; }
+    .hero-btns { justify-content: center; }
+    .hero-desc { margin: 0 auto 40px; }
+    .hero-tag { margin: 0 auto 28px; }
+    section { padding: 70px 24px; }
+    .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 50px; }
+    .services-grid { grid-template-columns: 1fr 1fr; }
+    .exp-item { grid-template-columns: 1fr; gap: 8px; }
+    footer { flex-direction: column; gap: 12px; text-align: center; padding: 30px 24px; }
+    .divider { margin: 0 24px; }
+  }
+  @media (max-width: 600px) {
+    .services-grid { grid-template-columns: 1fr; }
+    .certs-grid { grid-template-columns: 1fr; }
+    .profile-frame { width: 260px; height: 320px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#hero">AY</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#certifications">Certs</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="theme-toggle" id="themeToggle" title="Toggle theme">
+    <div class="toggle-ball" id="toggleBall">🌙</div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg-lines"></div>
+  <div class="hero-glow"></div>
+
+  <div class="hero-left">
+    <div class="hero-tag">Available for Consultation</div>
+    <h1 class="hero-name">Atin<span>Yadav</span></h1>
+    <p class="hero-title">Bachelor of Physiotherapy (BPT) · 2026</p>
+    <p class="hero-desc">
+      Aspiring physiotherapist at ITS COLLEGE OF HEALTH AND WELLNESS SCIENCE, Greater Noida. Passionate about restoring movement, relieving pain, and transforming lives through evidence-based physical therapy and rehabilitative care.
+    </p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn-primary">Book Consultation →</a>
+      <a href="#services" class="btn-outline">View Services</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="profile-frame">
+      <!-- REPLACE this div with: <img class="profile-img" src="YOUR_IMAGE.jpg" alt="Atin Yadav"> -->
+      <div class="profile-frame">
+  <img class="profile-img" src="your-photo.png" alt="Atin Yadav">
+</div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <span class="stat-num">2026</span>
+        <span class="stat-label">Passout</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">5+</span>
+        <span class="stat-label">Certifications</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">BPT</span>
+        <span class="stat-label">Degree</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <div class="section-tag">About Me</div>
+      <h2 class="section-title">Healing Through <em>Science & Care</em></h2>
+      <div class="about-badges">
+        <span class="badge badge-gold">BPT Student</span>
+        <span class="badge badge-blue">ITS COLLEGE OF HEALTH AND WELLNESS SCIENCE</span>
+        <span class="badge badge-green">Greater Noida</span>
+      </div>
+      <p>I am <strong>Atin Yadav</strong>, a dedicated Bachelor of Physiotherapy student at ITS COLLEGE OF HEALTH AND WELLNESS SCIENCE, Greater Noida. My journey in physiotherapy is driven by a deep commitment to improving patients' quality of life through science-backed rehabilitation techniques.</p>
+      <p>From manual therapy to advanced electrotherapy, I combine clinical knowledge with compassionate care. I believe every patient deserves personalized treatment tailored to their unique needs and recovery goals.</p>
+      <div class="about-info-grid">
+        <div class="info-item">
+          <label>Name</label>
+          <span>Atin Yadav</span>
+        </div>
+        <div class="info-item">
+          <label>Degree</label>
+          <span>BPT (Physiotherapy)</span>
+        </div>
+        <div class="info-item">
+          <label>College</label>
+          <span>ITS COLLEGE OF HEALTH AND WELLNESS SCIENCE</span>
+        </div>
+        <div class="info-item">
+          <label>Passout Year</label>
+          <span>2026</span>
+        </div>
+        <div class="info-item">
+          <label>Location</label>
+          <span>Greater Noida, UP</span>
+        </div>
+        <div class="info-item">
+          <label>Specialization</label>
+          <span>Physiotherapy & Rehab</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="edu-timeline reveal reveal-delay-2">
+      <div class="section-tag">Education</div>
+      <h2 class="section-title">Academic <em>Journey</em></h2>
+
+      <div class="edu-item">
+        <div class="edu-year">2023 – 2026</div>
+        <div class="edu-title">Bachelor of Physiotherapy (BPT)</div>
+        <div class="edu-school">ITS COLLEGE OF HEALTH AND WELLNESS SCIENCE, Greater Noida</div>
+        <div class="edu-desc">4-year professional degree program covering musculoskeletal rehabilitation, neurology, cardiopulmonary therapy, pediatrics, and sports physiotherapy.</div>
+      </div>
+
+      <div class="edu-item">
+        <div class="edu-year">2019 – 2021</div>
+        <div class="edu-title">12th Grade (Science – PCB)</div>
+        <!-- REPLACE school name below -->
+        <div class="edu-school">Choudhary Anvar Singh Inter College</div>
+        <div class="edu-desc">Completed senior secondary with Physics, Chemistry & Biology. Strong foundation in life sciences and human anatomy.</div>
+      </div>
+
+      <div class="edu-item">
+        <div class="edu-year">2015 – 2017</div>
+        <div class="edu-title">10th Grade</div>
+        <!-- REPLACE school name below -->
+        <div class="edu-school">Seven Hills, Etawah</div>
+        <div class="edu-desc">Completed secondary education with distinction in science and mathematics.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-tag reveal">Our Services</div>
+  <h2 class="section-title reveal">Therapeutic <em>Services</em></h2>
+  <p class="section-sub reveal">Evidence-based physiotherapy services designed to restore movement, reduce pain, and rebuild strength for a healthier life.</p>
+
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="service-num">01</div>
+      <div class="service-icon">💆</div>
+      <h3>Therapeutic Massage</h3>
+      <p>Deep tissue, Swedish, and sports massage techniques to relieve muscle tension, improve circulation, and accelerate recovery.</p>
+    </div>
+    <div class="service-card reveal reveal-delay-1">
+      <div class="service-num">02</div>
+      <div class="service-icon">🪣</div>
+      <h3>Cupping Therapy</h3>
+      <p>Traditional cupping combined with modern techniques to release myofascial tension, reduce inflammation, and promote healing.</p>
+    </div>
+    <div class="service-card reveal reveal-delay-2">
+      <div class="service-num">03</div>
+      <div class="service-icon">⚡</div>
+      <h3>Electrotherapy</h3>
+      <p>TENS, IFT, and ultrasound therapy to manage acute and chronic pain, reduce swelling, and accelerate tissue repair.</p>
+    </div>
+    <div class="service-card reveal reveal-delay-1">
+      <div class="service-num">04</div>
+      <div class="service-icon">🦴</div>
+      <h3>Musculoskeletal Rehab</h3>
+      <p>Comprehensive rehabilitation for joint injuries, back pain, sports injuries, post-surgical recovery, and fracture management.</p>
+    </div>
+    <div class="service-card reveal reveal-delay-2">
+      <div class="service-num">05</div>
+      <div class="service-icon">🧠</div>
+      <h3>Neurological Physio</h3>
+      <p>Specialized care for stroke recovery, Parkinson's, cerebral palsy, and other neurological conditions using neuroplasticity-based methods.</p>
+    </div>
+    <div class="service-card reveal reveal-delay-3">
+      <div class="service-num">06</div>
+      <div class="service-icon">🏃</div>
+      <h3>Sports Physiotherapy</h3>
+      <p>Performance optimization, injury prevention, and rapid recovery programs designed specifically for athletes and active individuals.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-num">07</div>
+      <div class="service-icon">🫁</div>
+      <h3>Chest Physiotherapy</h3>
+      <p>Breathing exercises, postural drainage, and percussion techniques to manage respiratory conditions and improve lung function.</p>
+    </div>
+    <div class="service-card reveal reveal-delay-1">
+      <div class="service-num">08</div>
+      <div class="service-icon">🤲</div>
+      <h3>Manual Therapy</h3>
+      <p>Hands-on techniques including joint mobilization, manipulation, and soft tissue therapy for pain relief and improved mobility.</p>
+    </div>
+    <div class="service-card reveal reveal-delay-2">
+      <div class="service-num">09</div>
+      <div class="service-icon">🧘</div>
+      <h3>Postural Correction</h3>
+      <p>Assessment and correction of postural imbalances causing chronic pain, headaches, and musculoskeletal discomfort.</p>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CERTIFICATIONS -->
+<section id="certifications">
+  <div class="section-tag reveal">Certifications</div>
+  <h2 class="section-title reveal">Professional <em>Credentials</em></h2>
+  <p class="section-sub reveal">Continuously upgrading skills through specialized training and certifications in physiotherapy and rehabilitation sciences.</p>
+
+  <div class="certs-grid">
+    <!-- CERT 1 — Replace dummy image with your actual certificate photo -->
+    <div class="cert-card reveal">
+      <div class="cert-img-wrap">
+        <!-- REPLACE: <img src="cert1.jpg" alt="Certificate 1"> -->
+        <div class="cert-img-placeholder" style="background:linear-gradient(135deg,#1a2a3a,#0f1820)">
+          🏅
+          <span>ADD CERT PHOTO</span>
+        </div>
+        <span class="cert-badge">2024</span>
+      </div>
+      <div class="cert-body">
+        <h3>Basic Life Support (BLS)</h3>
+        <p>American Heart Association · 2024</p>
+        <!-- REPLACE href with actual certificate link -->
+        <a href="#" class="cert-link">View Certificate →</a>
+      </div>
+    </div>
+
+    <!-- CERT 2 -->
+    <div class="cert-card reveal reveal-delay-1">
+      <div class="cert-img-wrap">
+        <div class="cert-img-placeholder" style="background:linear-gradient(135deg,#1a2e1a,#0f1a0f)">
+          🎖️
+          <span>ADD CERT PHOTO</span>
+        </div>
+        <span class="cert-badge">2024</span>
+      </div>
+      <div class="cert-body">
+        <h3>Dry Needling Fundamentals</h3>
+        <p>Physiotherapy Training Institute · 2024</p>
+        <a href="#" class="cert-link">View Certificate →</a>
+      </div>
+    </div>
+
+    <!-- CERT 3 -->
+    <div class="cert-card reveal reveal-delay-2">
+      <div class="cert-img-wrap">
+        <div class="cert-img-placeholder" style="background:linear-gradient(135deg,#2a1a1a,#1a0f0f)">
+          🥇
+          <span>ADD CERT PHOTO</span>
+        </div>
+        <span class="cert-badge">2023</span>
+      </div>
+      <div class="cert-body">
+        <h3>Sports Injury Management</h3>
+        <p>National Institute of Sports · 2023</p>
+        <a href="#" class="cert-link">View Certificate →</a>
+      </div>
+    </div>
+
+    <!-- CERT 4 -->
+    <div class="cert-card reveal reveal-delay-1">
+      <div class="cert-img-wrap">
+        <div class="cert-img-placeholder" style="background:linear-gradient(135deg,#1a1a2e,#0f0f1a)">
+          🏆
+          <span>ADD CERT PHOTO</span>
+        </div>
+        <span class="cert-badge">2023</span>
+      </div>
+      <div class="cert-body">
+        <h3>Kinesio Taping Practitioner</h3>
+        <p>Kinesio Taping Association · 2023</p>
+        <a href="#" class="cert-link">View Certificate →</a>
+      </div>
+    </div>
+
+    <!-- CERT 5 -->
+    <div class="cert-card reveal reveal-delay-2">
+      <div class="cert-img-wrap">
+        <div class="cert-img-placeholder" style="background:linear-gradient(135deg,#2a2a1a,#1a1a0f)">
+          ⭐
+          <span>ADD CERT PHOTO</span>
+        </div>
+        <span class="cert-badge">2024</span>
+      </div>
+      <div class="cert-body">
+        <h3>Manual Lymphatic Drainage</h3>
+        <p>Physio Academy India · 2024</p>
+        <a href="#" class="cert-link">View Certificate →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- EXPERIENCE / TRAINING -->
+<section id="experience">
+  <div class="section-tag reveal">Experience & Training</div>
+  <h2 class="section-title reveal">Clinical <em>Training</em></h2>
+  <p class="section-sub reveal">Hands-on clinical rotations, internships, and workshops building real-world physiotherapy expertise.</p>
+
+  <div class="exp-list">
+    <div class="exp-item reveal">
+      <div class="exp-date">Jul 2024 – Present</div>
+      <div class="exp-content">
+        <h3>Clinical Internship — Musculoskeletal Unit</h3>
+        <div class="exp-company">APRC - Advanced Physiotherapy Rehabilitation Centre, Greater Noida</div>
+        <p>Assisting senior physiotherapists in evaluation and treatment of musculoskeletal conditions. Involved in patient assessment, exercise prescription, electrotherapy application, and outcome documentation for orthopedic cases.</p>
+        <div class="exp-tags">
+          <span class="exp-tag">Orthopedics</span>
+          <span class="exp-tag">Electrotherapy</span>
+          <span class="exp-tag">Exercise Therapy</span>
+          <span class="exp-tag">Patient Assessment</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-item reveal reveal-delay-1">
+      <div class="exp-date">Jan 2024 – Jun 2024</div>
+      <div class="exp-content">
+        <h3>Neuro-Rehabilitation Rotation</h3>
+        <div class="exp-company">ANS Hospital, Greater Noida</div>
+        <p>Participated in neurological rehabilitation unit. Worked with post-stroke patients, cerebral palsy cases, and spinal injury rehabilitation under supervision of senior neurophysiotherapists.</p>
+        <div class="exp-tags">
+          <span class="exp-tag">Neurology</span>
+          <span class="exp-tag">Stroke Rehab</span>
+          <span class="exp-tag">Gait Training</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-item reveal reveal-delay-2">
+      <div class="exp-date">Oct 2023</div>
+      <div class="exp-content">
+        <h3>Sports Physiotherapy Workshop</h3>
+        <div class="exp-company">Delhi Sports Science Conference</div>
+        <p>3-day intensive workshop covering sports injury assessment, taping techniques, return-to-sport protocols, and performance optimization strategies for competitive athletes.</p>
+        <div class="exp-tags">
+          <span class="exp-tag">Sports Medicine</span>
+          <span class="exp-tag">Taping</span>
+          <span class="exp-tag">RTS Protocols</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-item reveal reveal-delay-1">
+      <div class="exp-date">Jun 2023</div>
+      <div class="exp-content">
+        <h3>Community Health Camp — Volunteer</h3>
+        <div class="exp-company">Parichowk, Greater Noida</div>
+        <p>Organized and participated in free physiotherapy health camp for local community. Conducted postural assessments, ergonomics education, and back pain management workshops for 100+ residents.</p>
+        <div class="exp-tags">
+          <span class="exp-tag">Community Health</span>
+          <span class="exp-tag">Ergonomics</span>
+          <span class="exp-tag">Health Education</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-tag reveal">Get in Touch</div>
+  <h2 class="section-title reveal">Visit or <em>Contact</em></h2>
+  <p class="section-sub reveal">Ready to start your rehabilitation journey? Reach out to book a consultation at our clinic in Greater Noida.</p>
+
+  <div class="contact-grid">
+    <div class="contact-info reveal">
+      <h3>Contact Information</h3>
+
+      <div class="contact-item">
+        <div class="contact-icon">📞</div>
+        <div class="contact-detail">
+          <label>Phone / WhatsApp</label>
+          <!-- REPLACE phone number below -->
+          <a href="tel:+917905995120">+91 7905995120</a>
+        </div>
+      </div>
+
+      <div class="contact-item">
+        <div class="contact-icon">✉️</div>
+        <div class="contact-detail">
+          <label>Email</label>
+          <!-- REPLACE email below -->
+          <a href="mailto:atiny997@gmail.com">atiny997@gmail.com</a>
+        </div>
+      </div>
+
+      <div class="contact-item">
+        <div class="contact-icon">📍</div>
+        <div class="contact-detail">
+          <label>Clinic Address</label>
+          <span>Parichowk, Greater Noida<br>Uttar Pradesh — 201306</span>
+        </div>
+      </div>
+
+      <div class="contact-item">
+        <div class="contact-icon">🕐</div>
+        <div class="contact-detail">
+          <label>Clinic Hours</label>
+          <span>Mon – Sat: 9:00 AM – 7:00 PM<br>Sunday: By Appointment</span>
+        </div>
+      </div>
+
+      <div class="contact-item">
+        <div class="contact-icon">🎓</div>
+        <div class="contact-detail">
+          <label>College</label>
+          <span>ITS COLLEGE OF HEALTH AND WELLNESS SCIENCE<br>Greater Noida, UP</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-map-box reveal reveal-delay-2">
+      <h4>📍 Find Us at Parichowk</h4>
+      <div class="map-placeholder">
+        <div class="map-grid"></div>
+        <div class="map-pin-anim">📍</div>
+        <span>Parichowk, Greater Noida</span>
+        <span style="font-size:0.7rem;opacity:0.6">Uttar Pradesh — 201306</span>
+      </div>
+      <div class="address-text">
+        <strong>Atin Yadav Physiotherapy Clinic</strong><br>
+        Near Parichowk, Greater Noida<br>
+        Uttar Pradesh — 201306<br><br>
+        <strong>Landmark:</strong> Add your landmark here — Replace this<br>
+        <strong>Metro:</strong> Nearest metro / transport info here
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">ATIN YADAV</div>
+  <div class="footer-copy">© 2025 Atin Yadav · BPT, ITS Engineering College · Physiotherapist, Greater Noida</div>
+</footer>
+
+<script>
+  // ─── THEME TOGGLE ───
+  const toggle = document.getElementById('themeToggle');
+  const ball = document.getElementById('toggleBall');
+  const html = document.documentElement;
+  toggle.addEventListener('click', () => {
+    const isDark = html.getAttribute('data-theme') === 'dark';
+    html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+    ball.textContent = isDark ? '☀️' : '🌙';
+    localStorage.setItem('theme', isDark ? 'light' : 'dark');
+  });
+  const saved = localStorage.getItem('theme');
+  if (saved) {
+    html.setAttribute('data-theme', saved);
+    ball.textContent = saved === 'light' ? '☀️' : '🌙';
+  }
+
+  // ─── CUSTOM CURSOR ───
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+  function animCursor() {
+    cursor.style.left = mx + 'px'; cursor.style.top = my + 'px';
+    rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+    requestAnimationFrame(animCursor);
+  }
+  animCursor();
+  document.querySelectorAll('a, button, .service-card, .cert-card, .theme-toggle').forEach(el => {
+    el.addEventListener('mouseenter', () => { ring.style.transform = 'translate(-50%,-50%) scale(2)'; ring.style.opacity = '0.3'; });
+    el.addEventListener('mouseleave', () => { ring.style.transform = 'translate(-50%,-50%) scale(1)'; ring.style.opacity = '0.6'; });
+  });
+
+  // ─── SCROLL REVEAL ───
+  const reveals = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+  reveals.forEach(el => obs.observe(el));
+
+  // ─── COUNTER ANIMATION ───
+  function animateCounter(el, end, suffix = '') {
+    let start = 0; const dur = 1500; const step = dur / end;
+    const timer = setInterval(() => {
+      start += 1;
+      el.textContent = start + suffix;
+      if (start >= end) { el.textContent = end + suffix; clearInterval(timer); }
+    }, step);
+  }
+
+  // ─── SMOOTH SCROLL ───
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+</script>
+</body>
+</html>
